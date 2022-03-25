@@ -35,7 +35,7 @@ public class Main {
         System.out.println(task1);
 
         Epic epic2 = new Epic(null, "Машина", "Ремонт машины", new ArrayList<>());
-        taskManager.createNewTask(epic1);
+        taskManager.createNewTask(epic2);
         Subtask subtask3 = new Subtask(null, "Замена масла", "Слить старое масла, залить новое",
                 "in progress", epic2.getId());
         Integer subtask3Id = taskManager.createNewTask(subtask3);
@@ -50,8 +50,7 @@ public class Main {
         System.out.println(subtask1);
         System.out.println(epic1);
 
-        taskManager.removeTaskById(0);
-        taskManager.removeTaskById(2);
+        taskManager.getTaskById(8);
 
     }
 

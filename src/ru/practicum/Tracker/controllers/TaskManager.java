@@ -16,7 +16,8 @@ public class TaskManager {
 
     public Task getTaskById(int id) {
         if (!tasks.containsKey(id)) {
-            throw new IllegalArgumentException("");
+            System.out.println("Задачи с таким id  не найдено!");
+
         }
         return tasks.get(id);
     }
@@ -41,7 +42,6 @@ public class TaskManager {
 
     public Integer createNewTask(Task task) {
         if (task.getId() != null) {
-            System.out.println("Ошибка! Передана задача с непустым id.");
             throw new IllegalArgumentException("");
         }
         Integer id = generateNewId();
@@ -50,7 +50,7 @@ public class TaskManager {
             Subtask subtask = (Subtask) task;
             int epicId = subtask.getEpicId();
             if (!tasks.containsKey(epicId)) {
-                System.out.println("Ошибка! Передан epicId которого нет в базе.");
+            throw new IllegalArgumentException("");
             }
             subtask.setId(id);
             tasks.put(subtask.getId(), subtask);
