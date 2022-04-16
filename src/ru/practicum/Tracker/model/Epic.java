@@ -1,12 +1,16 @@
 package ru.practicum.Tracker.model;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static ru.practicum.Tracker.model.TaskStatus.NEW;
 
 public class Epic extends Task {
 
-    private ArrayList<Integer> subTasks;
+    private List<Integer> subTasks;
 
     public Epic(Integer id, String name, String description, ArrayList<Integer> subTasks) {
-        super(id, name, description, "new");
+        super(id, name, description, NEW);
         this.subTasks = subTasks;
     }
 
@@ -24,7 +28,7 @@ public class Epic extends Task {
         this.subTasks.add(subtaskId);
     }
 
-    public ArrayList<Integer> getSubTasks() {
+    public List<Integer> getSubTasks() {
         return subTasks;
     }
 
