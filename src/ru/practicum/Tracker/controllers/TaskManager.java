@@ -24,6 +24,6 @@ public interface TaskManager {
 
     //Получение истории
 
-    int getHistory();
+    List<Task> getHistory();
 
 }

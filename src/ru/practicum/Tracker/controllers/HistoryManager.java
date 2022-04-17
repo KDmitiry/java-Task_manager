@@ -2,9 +2,11 @@ package ru.practicum.Tracker.controllers;
 
 import ru.practicum.Tracker.model.Task;
 
+import java.util.List;
+
 public interface HistoryManager {
 
-    int getHistory();
+    List<Task> getHistory();
 
     void addTask(Task task);
 

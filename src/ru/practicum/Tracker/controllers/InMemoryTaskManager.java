@@ -77,6 +77,7 @@ public class InMemoryTaskManager implements TaskManager {
             task.setId(id);
             tasks.put(task.getId(), task);
         }
+        historyManager.addTask(task);
         return id;
     }
 
@@ -152,7 +153,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public int getHistory() {
+    public List<Task> getHistory() {
         return historyManager.getHistory();
     }
 }
