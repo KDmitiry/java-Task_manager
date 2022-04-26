@@ -35,8 +35,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void updateEpicStatus(Epic epic) {
         List<Subtask> subtasks = getAllSubtasksOfEpicByEpicId(epic.getId());
-        Map<TaskStatus, Integer> statusCounter = new HashMap<>(); // добавили в
-        // Map enum
+        Map<TaskStatus, Integer> statusCounter = new HashMap<>();
         int allSubtasksCount = 0;
         for (Subtask subtask : subtasks) {
             Integer statusCount = statusCounter.getOrDefault(subtask.getStatus(), 0);
@@ -50,7 +49,6 @@ public class InMemoryTaskManager implements TaskManager {
         } else {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
-        historyManager.addTask(tasks.get(epic));
     }
 
     @Override
@@ -124,11 +122,12 @@ public class InMemoryTaskManager implements TaskManager {
                 System.out.println("Ошибка! Нельзя удалить эпик с подзадачами");
                 return;
             } else {
-                tasks.remove(id);
+                tasks.remove(task.getId());
             }
         } else {
-            tasks.remove(id);
+            tasks.remove(task.getId());
         }
+        historyManager.remove(task.getId());
     }
 
     @Override
