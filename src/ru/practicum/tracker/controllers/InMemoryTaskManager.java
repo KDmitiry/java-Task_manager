@@ -1,14 +1,11 @@
-package ru.practicum.Tracker.controllers;
+package ru.practicum.tracker.controllers;
 
-import ru.practicum.Tracker.model.Epic;
-import ru.practicum.Tracker.model.Subtask;
-import ru.practicum.Tracker.model.Task;
-import ru.practicum.Tracker.model.TaskStatus;
+import ru.practicum.tracker.model.Epic;
+import ru.practicum.tracker.model.Subtask;
+import ru.practicum.tracker.model.Task;
+import ru.practicum.tracker.model.TaskStatus;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
@@ -16,7 +13,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
 
-    private Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Task> tasks = new HashMap<>();
     private int idCounter = 0;
 
     private int generateNewId() {
@@ -68,7 +65,7 @@ public class InMemoryTaskManager implements TaskManager {
             subtask.setId(id);
             tasks.put(subtask.getId(), subtask);
             Epic epic = (Epic) tasks.get(epicId);
-            List<Integer> subTasks = epic.getSubTasks();
+            List<Integer> subTasks = epic.getSubTasksIds();
             subTasks.add(subtask.getId());
             updateEpicStatus(epic);
         } else {
@@ -114,15 +111,14 @@ public class InMemoryTaskManager implements TaskManager {
             Subtask subtask = (Subtask) task;
             int epicId = subtask.getEpicId();
             Epic epic = (Epic) tasks.get(epicId);
-            epic.getSubTasks().remove(subtask.getId());
+            epic.getSubTasksIds().remove(subtask.getId());
             updateEpicStatus(epic);
         } else if (task.getTaskType().equals("epic")) {
             Epic epic = (Epic) task;
-            if (epic.getSubTasks().isEmpty()) {
-                System.out.println("Ошибка! Нельзя удалить эпик с подзадачами");
-                return;
-            } else {
-                tasks.remove(task.getId());
+            historyManager.remove(id);
+            for (Integer subtaskId : epic.getSubTasksIds()) {
+                tasks.remove(subtaskId);
+                historyManager.remove(subtaskId);
             }
         } else {
             tasks.remove(task.getId());
@@ -142,7 +138,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Ошибка! Нельзя получить список по id задачи или подзадачи");
         }
         Epic epic = (Epic) task;
-        List<Integer> subtaskIds = epic.getSubTasks();
+        List<Integer> subtaskIds = epic.getSubTasksIds();
         List<Subtask> subtasks = new ArrayList<>();
         for (Integer subtaskId : subtaskIds) {
             Subtask subtask = (Subtask) tasks.get(subtaskId);

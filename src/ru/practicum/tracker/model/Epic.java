@@ -1,13 +1,28 @@
-package ru.practicum.Tracker.model;
+package ru.practicum.tracker.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static ru.practicum.Tracker.model.TaskStatus.NEW;
+import static ru.practicum.tracker.model.TaskStatus.NEW;
 
 public class Epic extends Task {
 
     private List<Integer> subTasks;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Epic epic = (Epic) o;
+        return Objects.equals(subTasks, epic.subTasks);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), subTasks);
+    }
 
     public Epic(Integer id, String name, String description, ArrayList<Integer> subTasks) {
         super(id, name, description, NEW);
@@ -28,7 +43,8 @@ public class Epic extends Task {
         this.subTasks.add(subtaskId);
     }
 
-    public List<Integer> getSubTasks() {
+
+    public List<Integer> getSubTasksIds() {
         return subTasks;
     }
 

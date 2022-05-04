@@ -1,4 +1,4 @@
-package ru.practicum.Tracker.model;
+package ru.practicum.tracker.model;
 
 import java.util.Objects;
 

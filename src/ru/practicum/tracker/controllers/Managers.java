@@ -1,4 +1,4 @@
-package ru.practicum.Tracker.controllers;
+package ru.practicum.tracker.controllers;
 
 public class Managers {
 

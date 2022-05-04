@@ -1,9 +1,9 @@
-import ru.practicum.Tracker.controllers.Managers;
-import ru.practicum.Tracker.controllers.TaskManager;
-import ru.practicum.Tracker.model.Epic;
-import ru.practicum.Tracker.model.Subtask;
-import ru.practicum.Tracker.model.Task;
-import ru.practicum.Tracker.model.TaskStatus;
+import ru.practicum.tracker.controllers.Managers;
+import ru.practicum.tracker.controllers.TaskManager;
+import ru.practicum.tracker.model.Epic;
+import ru.practicum.tracker.model.Subtask;
+import ru.practicum.tracker.model.Task;
+import ru.practicum.tracker.model.TaskStatus;
 
 import java.util.ArrayList;
 
@@ -24,39 +24,47 @@ public class Main {
 
         Subtask subtask1 = new Subtask(null, "Покраска комнаты # 1", "Синий цвет", TaskStatus.DONE,
                 epic1.getId());
-        Integer subtask1Id = manager.createNewTask(subtask1);
-        epic1.addSubtask(subtask1Id);
+        manager.createNewTask(subtask1);
 
         Subtask subtask2 = new Subtask(null, "Покраска комнаты # 2", "Белый цвет", TaskStatus.DONE,
                 epic1.getId());
-        Integer subtask2Id = manager.createNewTask(subtask2);
-        epic1.addSubtask(subtask2Id);
+        manager.createNewTask(subtask2);
 
         Subtask subtask3 = new Subtask(null, "Покраска комнаты # 3", "Зеленый цвет", TaskStatus.NEW,
                 epic1.getId());
-        Integer subtask3Id = manager.createNewTask(subtask3);
-        epic1.addSubtask(subtask3Id);
+        manager.createNewTask(subtask3);
 
         Epic epic2 = new Epic(null, "Epic # 2", "Покраска корридора", new ArrayList<>());
         manager.createNewTask(epic2);
 
-        System.out.println(task1);
+        manager.getTaskById(1);
+        manager.getTaskById(2);
+        manager.getTaskById(3);
+        manager.getTaskById(4);
+        manager.getTaskById(5);
+        manager.getTaskById(6);
+
+        System.out.println(manager.getHistory());
+        System.out.println(" ");
+
+        manager.getTaskById(4);
+        manager.getTaskById(2);
+        manager.getTaskById(6);
+        manager.getTaskById(1);
+        manager.getTaskById(3);
+        manager.getTaskById(5);
+
+        System.out.println(manager.getHistory());
+        System.out.println(" ");
+
+        manager.removeTaskById(3);
+
         System.out.println(manager.getHistory());
 
-        System.out.println(epic1);
+        manager.removeTaskById(2);
+
         System.out.println(manager.getHistory());
 
-        System.out.println(epic2);
-        System.out.println(manager.getHistory());
-
-        System.out.println(subtask1);
-        System.out.println(manager.getHistory());
-
-        manager.removeTaskById(1);
-        System.out.println(manager.getHistory());
-
-        manager.removeTaskById(5);
-        System.out.println(manager.getHistory());;
 
     }
 

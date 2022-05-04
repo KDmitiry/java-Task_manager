@@ -1,8 +1,8 @@
-package ru.practicum.Tracker.controllers;
+package ru.practicum.tracker.controllers;
 
-import ru.practicum.Tracker.model.Epic;
-import ru.practicum.Tracker.model.Subtask;
-import ru.practicum.Tracker.model.Task;
+import ru.practicum.tracker.model.Epic;
+import ru.practicum.tracker.model.Subtask;
+import ru.practicum.tracker.model.Task;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ public interface TaskManager {
 
     List<Subtask> getAllSubtasksOfEpicByEpicId(int id);
 
-    //Получение истории
 
     List<Task> getHistory();
 
