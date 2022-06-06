@@ -19,7 +19,7 @@ public class Main {
         Task task2 = new Task(null, "Task # 2", "Список продуктов", TaskStatus.DONE);
         manager.createNewTask(task2);
 
-        Epic epic1 = new Epic(null, "Epic # 1", "Покраска комнат", new ArrayList<>());
+        Epic epic1 = new Epic(null, "Epic # 1", "Покраска комнат");
         manager.createNewTask(epic1);
 
         Subtask subtask1 = new Subtask(null, "Покраска комнаты # 1", "Синий цвет", TaskStatus.DONE,
@@ -34,7 +34,7 @@ public class Main {
                 epic1.getId());
         manager.createNewTask(subtask3);
 
-        Epic epic2 = new Epic(null, "Epic # 2", "Покраска корридора", new ArrayList<>());
+        Epic epic2 = new Epic(null, "Epic # 2", "Покраска корридора");
         manager.createNewTask(epic2);
 
         manager.getTaskById(1);

@@ -12,7 +12,7 @@ public interface TaskManager {
 
     void updateEpicStatus(Epic epic);
 
-    Integer createNewTask(Task task);
+    Task createNewTask(Task task);
 
     void updateNewTask(Task task);
 

@@ -13,11 +13,15 @@ public class InMemoryTaskManager implements TaskManager {
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
 
-    private final Map<Integer, Task> tasks = new HashMap<>();
+    private static final Map<Integer, Task> tasks = new HashMap<>();
     private int idCounter = 0;
 
     private int generateNewId() {
         return idCounter++;
+    }
+
+    public static Map<Integer, Task> getTasks() {
+        return tasks;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Integer createNewTask(Task task) {
+    public Task createNewTask(Task task) {
 
         if (task.getId() != null) {
             throw new IllegalArgumentException("");
@@ -73,7 +77,7 @@ public class InMemoryTaskManager implements TaskManager {
             tasks.put(task.getId(), task);
         }
         historyManager.addTask(task);
-        return id;
+        return task;
     }
 
     @Override

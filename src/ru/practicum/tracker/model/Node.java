@@ -1,6 +1,4 @@
-package ru.practicum.tracker.controllers;
-
-import ru.practicum.tracker.model.Task;
+package ru.practicum.tracker.model;
 
 import java.util.Objects;
 

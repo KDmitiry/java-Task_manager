@@ -1,6 +1,6 @@
 package ru.practicum.tracker.controllers;
 
-import ru.practicum.tracker.model.Epic;
+import ru.practicum.tracker.model.Node;
 import ru.practicum.tracker.model.Task;
 
 import java.util.*;

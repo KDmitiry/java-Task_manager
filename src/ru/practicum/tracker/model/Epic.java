@@ -24,8 +24,9 @@ public class Epic extends Task {
         return Objects.hash(super.hashCode(), subTasks);
     }
 
-    public Epic(Integer id, String name, String description, ArrayList<Integer> subTasks) {
+    public Epic(Integer id, String name, String description) {
         super(id, name, description, NEW);
+        subTasks = new ArrayList<>();
         this.subTasks = subTasks;
     }
 
