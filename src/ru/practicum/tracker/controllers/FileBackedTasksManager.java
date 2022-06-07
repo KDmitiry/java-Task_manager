@@ -52,7 +52,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
             listHistoryId.add(taskId.getKey());
         }
 
-        return listHistoryId.toString().replaceAll("^\\[|\\]$", "");
+        return listHistoryId.toString().replaceAll("^\\[|]$", "");
     }
 
     static FileBackedTasksManager loadFromFile(File storageTask) {
@@ -92,46 +92,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return fileBackedTasksManager;
     }
 
-
-    public String toString(Task task) {
-        return task.toString();
-    }
-
-    private static String toString(HistoryManager historyManager) {
-        StringBuilder sb = new StringBuilder("");
-        for (Task task : historyManager.getHistory()) {
-            sb.append(task.getId()).append(",");
-        }
-        return sb.toString();
-    }
-
-    public static List<String> historyFromString(String value) {
-        List<String> ids = new ArrayList<>();
-        String[] stringHistory = value.split(",");
-        for (int i = stringHistory.length - 1; i >= 0; i--) {
-            ids.add(stringHistory[i]);
-        }
-        return ids;
-    }
-
-    private Task getTaskFromString(String value) {
-        final String[] line = value.split(",");
-        Task unifiedTask = null;
-        switch (TaskTypes.valueOf(line[1])) {
-            case TASK:
-                unifiedTask = new Task(parseInt(line[2]), line[3], line[4], statusFromString(line[5]));
-                break;
-            case EPIC:
-                unifiedTask = new Epic(parseInt(line[2]), line[3], line[4]);
-                break;
-            case SUBTASK:
-                unifiedTask = new Subtask(parseInt(line[2]), line[3], line[4], statusFromString(line[5]), parseInt(line[6]));
-                break;
-        }
-        return unifiedTask;
-    }
-
-
     public static TaskStatus statusFromString(String status) {
         switch (status) {
             case "NEW":
@@ -143,7 +103,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         }
         return null;
     }
-
 
     @Override
     public Task getTaskById(int id) {
@@ -224,7 +183,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         fileBackedTasksManager.createNewTask(epic2);
 
         System.out.println(fileBackedTasksManager.getHistory());
-
 
 
         System.out.println("Выводим Task 1" + "\n" + fileBackedTasksManager.getTaskById(0));
