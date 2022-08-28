@@ -1,10 +1,11 @@
 package ru.practicum.tracker.model;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Subtask extends Task {
 
-    private int epicId;
+    private final int epicId;
 
     @Override
     public boolean equals(Object o) {
@@ -20,22 +21,27 @@ public class Subtask extends Task {
         return Objects.hash(super.hashCode(), epicId);
     }
 
-    public Subtask(Integer id, String name, String description, TaskStatus status, int epicId) {
-        super(id, name, description, status);
+    public Subtask(Integer id, String name, String description, TaskStatus status, int epicId, LocalDateTime startTime, Integer duration) {
+        super(id, name, description, status, startTime, duration);
         this.epicId = epicId;
     }
 
+
     @Override
     public String toString() {
-        return "Subtask{" + "id=" + getId() + ", name='" + getName() + '\'' + ", description='" + getDescription() + '\'' + ", status='" + getStatus() + '\'' + '}';
+        return "Subtask{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", status=" + getStatus() +
+                ", startTime=" + getStartTime() +
+                ", endTime=" + getEndTime() +
+                ", duration=" + getDuration() +
+                '}';
     }
 
     public int getEpicId() {
         return epicId;
-    }
-
-    public void setEpicId(int epicId) {
-        this.epicId = epicId;
     }
 
     @Override

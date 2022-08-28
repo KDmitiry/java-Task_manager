@@ -3,69 +3,55 @@ import ru.practicum.tracker.controllers.TaskManager;
 import ru.practicum.tracker.model.Epic;
 import ru.practicum.tracker.model.Subtask;
 import ru.practicum.tracker.model.Task;
-import ru.practicum.tracker.model.TaskStatus;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.List;
+
+import static ru.practicum.tracker.model.TaskStatus.NEW;
 
 public class Main {
-    public static void main(String[] args) {
-
-        TaskManager manager = Managers.getDefault();
 
 
-        Task task1 = new Task(null, "Task # 1", "Список материалов", TaskStatus.NEW);
-        manager.createNewTask(task1);
 
-        Task task2 = new Task(null, "Task # 2", "Список продуктов", TaskStatus.DONE);
-        manager.createNewTask(task2);
+        static Task task1;
+        static Task task2;
+        static Epic epic1;
+        static Epic epic2;
+        static Subtask subtask1;
 
-        Epic epic1 = new Epic(null, "Epic # 1", "Покраска комнат");
-        manager.createNewTask(epic1);
+        static Subtask subtask2;
 
-        Subtask subtask1 = new Subtask(null, "Покраска комнаты # 1", "Синий цвет", TaskStatus.DONE,
-                epic1.getId());
-        manager.createNewTask(subtask1);
+        public static void main(String[] args) {
 
-        Subtask subtask2 = new Subtask(null, "Покраска комнаты # 2", "Белый цвет", TaskStatus.DONE,
-                epic1.getId());
-        manager.createNewTask(subtask2);
+            TaskManager manager = Managers.getDefault();
 
-        Subtask subtask3 = new Subtask(null, "Покраска комнаты # 3", "Зеленый цвет", TaskStatus.NEW,
-                epic1.getId());
-        manager.createNewTask(subtask3);
+            task1 = new Task(null, "task1", "task1-1", NEW,
+                    LocalDateTime.of(2022, Month.MAY, 17, 12, 20), 1);
+            manager.createTask(task1);
 
-        Epic epic2 = new Epic(null, "Epic # 2", "Покраска корридора");
-        manager.createNewTask(epic2);
+            task2 = new Task(null, "task2", "task2-2", NEW,
+                    LocalDateTime.of(2022, Month.MAY, 16, 12, 20), 1);
+            manager.createTask(task2);
 
-        manager.getTaskById(1);
-        manager.getTaskById(2);
-        manager.getTaskById(3);
-        manager.getTaskById(4);
-        manager.getTaskById(5);
-        manager.getTaskById(6);
+            epic1 = new Epic(null, "epic1", "epic1-1", NEW,
+                    LocalDateTime.of(2022, Month.MAY, 13, 12, 20), 10);
+            manager.createEpic(epic1);
 
-        System.out.println(manager.getHistory());
-        System.out.println(" ");
+            epic2 = new Epic(null, "epic2", "epic2-2", NEW,
+                    LocalDateTime.of(2022, Month.MAY, 15, 12, 20), 18);
+            manager.createEpic(epic2);
 
-        manager.getTaskById(4);
-        manager.getTaskById(2);
-        manager.getTaskById(6);
-        manager.getTaskById(1);
-        manager.getTaskById(3);
-        manager.getTaskById(5);
+            subtask1 = new Subtask(null, "subtask1", "subtask1-1", NEW, epic1.getId(),
+                    LocalDateTime.of(2022, Month.MAY, 11, 12, 20), 24);
+            manager.createSubTask(subtask1);
 
-        System.out.println(manager.getHistory());
-        System.out.println(" ");
+            subtask2 = new Subtask(null, "subtask2", "subtask2-2", NEW, epic1.getId(),
+                    LocalDateTime.of(2022, Month.MAY, 12, 12, 20), 13);
+            manager.createSubTask(subtask2);
 
-        manager.removeTaskById(3);
+            System.out.println(manager.getPrioritizedTasks().size());
 
-        System.out.println(manager.getHistory());
-
-        manager.removeTaskById(2);
-
-        System.out.println(manager.getHistory());
-
-
+        }
     }
 
-}

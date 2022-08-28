@@ -7,6 +7,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +16,14 @@ import static java.lang.Integer.parseInt;
 import static ru.practicum.tracker.model.TaskTypes.*;
 
 
-public class FileBackedTasksManager extends InMemoryTaskManager implements TaskManager {
+public class FileBackedTasksManager extends InMemoryTaskManager {
+    public FileBackedTasksManager() {
+    }
 
     static File tasksStorage = new File("saveAllTasks.csv");
 
 
-    public void save() { // Создаем метод для сохранения
+    public void save() {
         try (BufferedWriter writer = Files.newBufferedWriter(tasksStorage.toPath(),
                 StandardOpenOption.CREATE,
                 StandardOpenOption.TRUNCATE_EXISTING)) {
@@ -74,15 +77,13 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
                     TaskStatus status = TaskStatus.valueOf(splitter[4]);
 
                     if (type == TASK) {
-                        getTasks().put(id,
-                                new Task(id, name, description, status));
+                        getTasks().put(id, new Task(id, name, description, TaskStatus.NEW, LocalDateTime.now(), 10));
                     } else if (type == SUBTASK) {
-                        Integer epicId = parseInt(splitter[5]);
-                        getTasks().put(id,
-                                new Subtask(id, name, description, status, epicId));
+                        int epicId = parseInt(splitter[5]);
+                        getTasks().put(id, new Subtask(id, name, description, status, epicId, LocalDateTime.now(), 12));
                     } else if (type == EPIC) {
                         getTasks().put(id,
-                                new Epic(id, name, description));
+                                new Epic(id, name, description, TaskStatus.NEW, LocalDateTime.now(), 15));
                     }
                 }
             }
@@ -104,31 +105,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         return null;
     }
 
-    @Override
-    public Task getTaskById(int id) {
-        super.getTaskById(id);
-        save();
-        return getTaskById(id);
-    }
-
-    @Override
-    public void updateEpicStatus(Epic epic) {
-        super.updateEpicStatus(epic);
-        save();
-    }
-
-    @Override
-    public Task createNewTask(Task task) {
-        super.createNewTask(task);
-        save();
-        return task;
-    }
-
-    @Override
-    public void updateNewTask(Task task) {
-        super.updateNewTask(task);
-        save();
-    }
 
     @Override
     public void removeTaskById(int id) {
@@ -148,59 +124,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager implements TaskM
         final List<Task> history = super.getHistory();
         save();
         return history;
-    }
-
-    public static void main(String[] args) { // Создаем задачи и тестируем программу
-
-        FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
-        FileBackedTasksManager.loadFromFile(tasksStorage);
-
-        Task task1 = new Task(0, "Task # 1", "description 1", TaskStatus.NEW);
-        fileBackedTasksManager.createNewTask(task1);
-
-        Task task2 = new Task(1, "Task # 2", "description 2", TaskStatus.DONE);
-
-        System.out.println(fileBackedTasksManager.getHistory());
-
-        fileBackedTasksManager.createNewTask(task2);
-
-        Epic epic1 = new Epic(2, "Epic # 1", "description 3");
-        fileBackedTasksManager.createNewTask(epic1);
-
-        Subtask subtask1 = new Subtask(3, "qrgsd", "description 4", TaskStatus.DONE,
-                epic1.getId());
-        fileBackedTasksManager.createNewTask(subtask1);
-
-        Subtask subtask2 = new Subtask(4, "fhjtr", "description 5", TaskStatus.DONE,
-                epic1.getId());
-        fileBackedTasksManager.createNewTask(subtask2);
-
-        Subtask subtask3 = new Subtask(5, "klfc", "description 6", TaskStatus.NEW,
-                epic1.getId());
-        fileBackedTasksManager.createNewTask(subtask3);
-
-        Epic epic2 = new Epic(6, "Epic # 2", "description 7");
-        fileBackedTasksManager.createNewTask(epic2);
-
-        System.out.println(fileBackedTasksManager.getHistory());
-
-
-        System.out.println("Выводим Task 1" + "\n" + fileBackedTasksManager.getTaskById(0));
-        System.out.println("Выводим Epic 2" + "\n" + fileBackedTasksManager.getTaskById(6));
-
-        fileBackedTasksManager.getTaskById(epic1.getId());
-        fileBackedTasksManager.getTaskById(epic2.getId());
-        fileBackedTasksManager.getTaskById(epic1.getId());
-        fileBackedTasksManager.getTaskById(epic2.getId());
-        fileBackedTasksManager.getTaskById(epic1.getId());
-        fileBackedTasksManager.getTaskById(epic2.getId());
-
-        System.out.println("Выводим историю" + "\n" + fileBackedTasksManager.getHistory());
-
-        fileBackedTasksManager.removeTaskById(task1.getId());  //Тестируем удаление
-        System.out.println("Выводим историю без задачи 1" + "\n"
-                + fileBackedTasksManager.getHistory());
-
     }
 }
 

@@ -10,19 +10,43 @@ public interface TaskManager {
 
     Task getTaskById(int id);
 
-    void updateEpicStatus(Epic epic);
+    void createTask(Task task);
 
-    Task createNewTask(Task task);
+    void createSubTask(Subtask subTask);
 
-    void updateNewTask(Task task);
+    void createEpic(Epic epic);
+
+    Subtask getSubTaskById(int id);
+
+    Epic getEpicById(int id);
+
+    void updatedTask(Task task);
+
+    void updatedEpic(Epic epic);
+
+    void updatedSubTask(Subtask subTask);
+
+    List<Task> getAllTasks();
+
+    List<Epic> getAllEpics();
+
+    List<Subtask> getAllSubtasks();
 
     void removeTaskById(int id);
 
+    void removeSubTaskById(int id);
+
+    void removeEpicById(int id);
+
     void clearAllTasks();
 
-    List<Subtask> getAllSubtasksOfEpicByEpicId(int id);
+    void clearAllSubTasks();
 
+    void clearAllEpics();
 
     List<Task> getHistory();
 
+    List<Task> getPrioritizedTasks();
+
+    List<Subtask> getListSubTasks(int id);
 }
